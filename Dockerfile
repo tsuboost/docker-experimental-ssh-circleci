@@ -9,4 +9,6 @@ RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 # Clone private repository
 RUN --mount=type=ssh,id=github-test-private-repo git clone git@github.com:scottrigby/github-test-private-repo.git
-RUN ls -lah github-test-private-repo
+
+# Test that a file from the private cloned repo exists
+RUN [ -e github-test-private-repo/README.md ] || exit 1
