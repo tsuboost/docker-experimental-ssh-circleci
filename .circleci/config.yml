@@ -17,7 +17,9 @@ jobs:
           name: Install Docker client
           command: apk --no-cache add docker
       - run:
-          name: 
+          name: Build and push Docker image
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
             docker build --ssh github-test-private-repo=/root/.ssh/id_rsa_68bbc2800cd56663bde58ac4cb2087fd -t r6by/docker-experimental-ssh-circleci:$TAG .
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+            docker push r6by/docker-experimental-ssh-circleci:$TAG
