@@ -8,5 +8,5 @@ RUN apk add --no-cache openssh-client git
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 # Clone private repository
-RUN --mount=type=ssh git clone git@github.com:scottrigby/docker-experimental-ssh-circleci.git test-clone-dir
-RUN ls -lah test-clone-dir
+RUN --mount=type=ssh git clone git@github.com:scottrigby/github-test-private-repo.git
+RUN ls -lah github-test-private-repo
