@@ -20,4 +20,4 @@ jobs:
           name: 
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
-            docker build --ssh github-test-private-repo=~/.ssh/id_rsa_68bbc2800cd56663bde58ac4cb2087fd -t r6by/docker-experimental-ssh-circleci:$TAG .
+            docker build --ssh github-test-private-repo=/root/.ssh/id_rsa_68bbc2800cd56663bde58ac4cb2087fd -t r6by/docker-experimental-ssh-circleci:$TAG .
