@@ -55,6 +55,7 @@ Git repo to test Docker 18.09 [experimental ssh feature](https://docs.docker.com
     |     . o   *     |
     |    E    .+.+    |
     +------[MD5]------+
+    Private key:
     -----BEGIN RSA PRIVATE KEY-----
     MIIEpAIBAAKCAQEA08RJzBTuKjLa5MD4CxiRdXxGxQHRu4+p+Mi+ha2iynxw2+3Q
     6NO9zGGPq/BprCn4wbMfgbMf7Y4kygYSd1SV8Ykjvxm6nQSw1SeQziJDRHrrh1nO
@@ -82,7 +83,10 @@ Git repo to test Docker 18.09 [experimental ssh feature](https://docs.docker.com
     cBZwUPyZm3Psgvvvo1JKzdYD2rfb2d599Y4O1WRq5tygx2P4jUmPz1NjzJpog0uF
     r6P1i+KRcIowJOF+n9SnwwsF5JtslT+5/lIFFsi0dqxL5nQH6shAqA==
     -----END RSA PRIVATE KEY-----
+    Public key:
     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDTxEnMFO4qMtrkwPgLGJF1fEbFAdG7j6n4yL6FraLKfHDb7dDo073MYY+r8GmsKfjBsx+Bsx/tjiTKBhJ3VJXxiSO/GbqdBLDVJ5DOIkNEeuuHWc7eFCejpdD7taq0dcnXSoLOxl0Wg/YatSqdIJ+6qe4Wgv3aZ7CQKMZ3xvAuIxg31RwL2repQAy+5yc+rzStyn4/bNV2lwJ270R5jbRCgIs20D/IlpkUox8kjCTTudz4wR6KS3V4x9f1xypMiVk667zH11lE0DdEFaXHpDSYdDKE4nuo2S3BVFVTRxKU/b/xjyJN/o9hgHVaWRITrJRtS8WxrUl1p1o/5/GxhoF/ your_email@example.com
+    CircleCI private key name:
+    id_rsa_9a35fdd88eede895850483a4f97a52aa
     ```
 
     </details>
