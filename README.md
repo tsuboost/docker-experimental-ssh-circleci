@@ -2,8 +2,6 @@
 
 [![CircleCI](https://circleci.com/gh/scottrigby/docker-experimental-ssh-circleci.svg?style=svg)](https://circleci.com/gh/scottrigby/docker-experimental-ssh-circleci)
 
-[![](https://images.microbadger.com/badges/image/r6by/docker-experimental-ssh-circleci.svg)](https://microbadger.com/images/r6by/docker-experimental-ssh-circleci "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/r6by/docker-experimental-ssh-circleci.svg)](https://microbadger.com/images/r6by/docker-experimental-ssh-circleci "Get your own version badge on microbadger.com")
-
 ## Purpose
 
 Git repo to test Docker 18.09 [experimental ssh feature](https://docs.docker.com/develop/develop-images/build_enhancements/#using-ssh-to-access-private-data-in-builds). This project's public Dockerfile clones a [test private repo](https://github.com/scottrigby/github-test-private-repo) without adding insecure credentials to any of the container image's layers. for more information and examples, see [Build secrets and SSH forwarding in Docker 18.09](https://medium.com/@tonistiigi/build-secrets-and-ssh-forwarding-in-docker-18-09-ae8161d066).
