@@ -86,18 +86,21 @@ Git repo to test Docker 18.09 [experimental ssh feature](https://docs.docker.com
     ```
 
     </details>
-
-1. [Set up your GitHub project](https://circleci.com/docs/2.0/getting-started/#setting-up-your-build-on-circleci) on CircleCI
-1. Copy private key from step 1 stdout and [add to the CircleCI project](https://circleci.com/docs/2.0/add-ssh-key/): `Permissions` > `SSH Permissions` > `Add SSH Key`
-1. Copy MD5 public key fingerprint from stdout and add to [CircleCI config file](./.circleci/config.yml) container build job step, and matching `PRIVATE_KEY` environment variable (note pattern is `echo id_rsa_${fingerprint//:/}`). Example from sample output above:
+2. [Set up your GitHub project](https://circleci.com/docs/2.0/getting-started/#setting-up-your-build-on-circleci) on CircleCI
+3. Copy private key from step 1 stdout and [add to the CircleCI project](https://circleci.com/docs/2.0/add-ssh-key/): `Permissions` > `SSH Permissions` > `Add SSH Key`
+4. Update [CircleCI config file](./.circleci/config.yml) with public key fingerprint and matching key added to CircleCI in step 2:
+  - Copy MD5 public "key fingerprint" from step 1 stdout and add to container build job step:
     ```yaml
-    environment:
-      PRIVATE_KEY: id_rsa_9a35fdd88eede895850483a4f97a52aa
     steps:
       - add_ssh_keys:
           fingerprints:
             - 9a:35:fd:d8:8e:ed:e8:95:85:04:83:a4:f9:7a:52:aa
     ```
-1. Add your `DOCKER_USER` and `DOCKER_PASS` container registry push credentials to CircleCI [environment variables](https://circleci.com/docs/2.0/env-vars/#overview): `Build` > `Project` > `Settings` > `Environment Variables`
-1. Copy public key from step 1 stdout and [add a GitHub deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys) to the private git repo you want to clone in your project Dockerfile. Deploy keys are read-only by default - do not select `allow write access` if you do not need CircleCI to also push to the private git repo
-1. Current circle config builds and pushes container image when pushing to `master`
+  - Copy "CircleCI private key name" from step 1 stdout and add to container build environment variable `PRIVATE_KEY`:
+    ```yaml
+    environment:
+      PRIVATE_KEY: id_rsa_9a35fdd88eede895850483a4f97a52aa
+    ```
+5. Add your `DOCKER_USER` and `DOCKER_PASS` container registry push credentials to CircleCI [environment variables](https://circleci.com/docs/2.0/env-vars/#overview): `Build` > `Project` > `Settings` > `Environment Variables`
+6. Copy public key from step 1 stdout and [add a GitHub deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys) to the private git repo you want to clone in your project Dockerfile. Deploy keys are read-only by default - do not select `allow write access` if you do not need CircleCI to also push to the private git repo
+7. Current circle config builds and pushes container image when pushing to `master`
