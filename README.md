@@ -89,8 +89,11 @@ Git repo to test Docker 18.09 [experimental ssh feature](https://docs.docker.com
 
 1. [Set up your GitHub project](https://circleci.com/docs/2.0/getting-started/#setting-up-your-build-on-circleci) on CircleCI
 1. Copy private key from step 1 stdout and [add to the CircleCI project](https://circleci.com/docs/2.0/add-ssh-key/): `Permissions` > `SSH Permissions` > `Add SSH Key`
-1. Copy MD5 public key fingerprint from stdout and add to [CircleCI config file](./.circleci/config.yml) container build job step. Example from sample output above:
+1. Copy MD5 public key fingerprint from stdout and add to [CircleCI config file](./.circleci/config.yml) container build job step, and matching `PRIVATE_KEY` environment variable (note pattern is `echo id_rsa_${fingerprint//:/}`). Example from sample output above:
     ```yaml
+    environment:
+      PRIVATE_KEY: id_rsa_9a35fdd88eede895850483a4f97a52aa
+    steps:
       - add_ssh_keys:
           fingerprints:
             - 9a:35:fd:d8:8e:ed:e8:95:85:04:83:a4:f9:7a:52:aa
