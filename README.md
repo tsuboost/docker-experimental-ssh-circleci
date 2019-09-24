@@ -7,13 +7,25 @@
 Git repo to test Docker 18.09 [experimental ssh feature](https://docs.docker.com/develop/develop-images/build_enhancements/#using-ssh-to-access-private-data-in-builds). This project's public Dockerfile clones a [test private repo](https://github.com/scottrigby/github-test-private-repo) without adding insecure credentials to any of the container image's layers. for more information and examples, see [Build secrets and SSH forwarding in Docker 18.09](https://medium.com/@tonistiigi/build-secrets-and-ssh-forwarding-in-docker-18-09-ae8161d066).
 
 
-## Test
+## Check security
 
 - Check new docker build BuildKit plain output in [CircleCI](https://circleci.com/gh/scottrigby/docker-experimental-ssh-circleci) for security
-- See private repo contents, and inspect [built container image](https://hub.docker.com/r/r6by/docker-experimental-ssh-circleci) history:
+- See private repo contents, and inspect [built container image](https://hub.docker.com/r/r6by/docker-experimental-ssh-circleci/tags) history:
     ```console
     $ docker pull r6by/docker-experimental-ssh-circleci
+
+    $ docker run --rm r6by/docker-experimental-ssh-circleci sh -c 'cat github-test-private-repo/README.md'
+    Test repo for accessing private GitHub repos. Does not contain anything sensitive.
+
+    $ docker history --no-trunc --format '{{.ID}} {{.CreatedBy}} {{.Size}}'  r6by/docker-experimental-ssh-circleci
+    sha256:bf0b1586234d9c00a97a4fe209692f5f0febc3eee37efb5d23e7ae1ca855d96f RUN /bin/sh -c [ -e github-test-private-repo/README.md ] || exit 1 # buildkit 0B
+    <missing> RUN /bin/sh -c git clone git@github.com:scottrigby/github-test-private-repo.git # buildkit 20.9kB
+    <missing> RUN /bin/sh -c mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts # buildkit 392B
+    <missing> RUN /bin/sh -c apk add --no-cache openssh-client git # buildkit 21.6MB
+    <missing> /bin/sh -c #(nop)  CMD ["/bin/sh"] 0B
+    <missing> /bin/sh -c #(nop) ADD file:fe64057fbb83dccb960efabbf1cd8777920ef279a7fa8dbca0a8801c651bdf7c in /  5.58MB
     ```
+- Any other thoughts about security? [Open an issue](https://github.com/scottrigby/docker-experimental-ssh-circleci/issues/new)
 
 ## Setup
 
