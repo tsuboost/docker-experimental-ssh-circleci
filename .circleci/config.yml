@@ -18,7 +18,7 @@ jobs:
           version: 18.09.3
       - run:
           name: Install Docker client
-          command: apk --no-cache --no-progress add docker openssh-client
+          command: apk --no-cache --no-progress add docker
       - run:
           name: Define image tag
           command: |
