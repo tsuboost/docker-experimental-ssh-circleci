@@ -45,3 +45,4 @@ workflows:
             branches:
               only:
                 - master
+                - default-ssh-auth-sock
