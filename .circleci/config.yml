@@ -44,3 +44,4 @@ workflows:
             branches:
               only:
                 - master
+                - test-remove-id
