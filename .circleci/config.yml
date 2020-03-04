@@ -26,8 +26,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            ssh-add -E md5 /root/.ssh/$PRIVATE_KEY
-            docker build --progress=plain --ssh default -t r6by/docker-experimental-ssh-circleci:$TAG -t r6by/docker-experimental-ssh-circleci:latest .
+            docker build --progress=plain --ssh default=/root/.ssh/$PRIVATE_KEY -t r6by/docker-experimental-ssh-circleci:$TAG -t r6by/docker-experimental-ssh-circleci:latest .
       - run:
           name: Docker login
           command: echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
