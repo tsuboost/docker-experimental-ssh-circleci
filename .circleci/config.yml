@@ -2,7 +2,7 @@ version: 2
 jobs:
   build-push:
     docker:
-      - image: alpine:3.10
+      - image: alpine:3.11
     environment:
       BASH_ENV: /etc/profile
       DOCKER_BUILDKIT: 1
@@ -17,7 +17,7 @@ jobs:
           version: 18.09.3
       - run:
           name: Install Docker client
-          command: apk --no-cache --no-progress add docker
+          command: apk --no-cache --no-progress add docker-cli
       - run:
           name: Define image tag
           command: |
