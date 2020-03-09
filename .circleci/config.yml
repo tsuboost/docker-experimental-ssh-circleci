@@ -18,7 +18,7 @@ jobs:
           version: 18.09.3
       - run:
           name: Install Docker client
-          command: apk --no-cache --no-progress add docker-cli
+          command: apk add --no-cache --no-progress docker-cli
       - run:
           name: Define image tag
           command: |
@@ -26,7 +26,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            apk add --no-cache openssh-client
+            apk add --no-cache --no-progress openssh-client
             ssh-add -D
             ssh-add /root/.ssh/$PRIVATE_KEY
             docker build --progress=plain --ssh default -t r6by/docker-experimental-ssh-circleci:$TAG -t r6by/docker-experimental-ssh-circleci:latest .
