@@ -6,6 +6,7 @@ jobs:
     environment:
       BASH_ENV: /etc/profile
       DOCKER_BUILDKIT: 1
+      PRIVATE_KEY: id_rsa_68bbc2800cd56663bde58ac4cb2087fd
     shell: /bin/sh -leo pipefail
     steps:
       - checkout
@@ -27,7 +28,7 @@ jobs:
           command: |
             apk add --no-cache openssh-client
             ssh-add -D
-            ssh-add /root/.ssh/id_rsa_68bbc2800cd56663bde58ac4cb2087fd
+            ssh-add /root/.ssh/$PRIVATE_KEY
             docker build --progress=plain --ssh default -t r6by/docker-experimental-ssh-circleci:$TAG -t r6by/docker-experimental-ssh-circleci:latest .
       - run:
           name: Docker login
