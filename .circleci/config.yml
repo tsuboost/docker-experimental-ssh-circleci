@@ -2,7 +2,7 @@ version: 2
 jobs:
   build-push:
     docker:
-      - image: alpine:3.10
+      - image: alpine:3.11
     environment:
       BASH_ENV: /etc/profile
       DOCKER_BUILDKIT: 1
@@ -18,7 +18,7 @@ jobs:
           version: 18.09.3
       - run:
           name: Install Docker client
-          command: apk --no-cache --no-progress add docker
+          command: apk add --no-cache --no-progress docker-cli
       - run:
           name: Define image tag
           command: |
@@ -27,6 +27,13 @@ jobs:
           name: Build Docker image
           command: |
             docker build --progress=plain --ssh default=/root/.ssh/$PRIVATE_KEY -t r6by/docker-experimental-ssh-circleci:$TAG -t r6by/docker-experimental-ssh-circleci:latest .
+          # Alternative approach. Useful with multiple ssh keys
+          # See https://circleci.com/docs/2.0/add-ssh-key/#adding-multiple-keys-with-blank-hostnames
+          # command: |
+          #   apk add --no-cache --no-progress openssh-client
+          #   ssh-add -D
+          #   ssh-add /root/.ssh/$PRIVATE_KEY
+          #   docker build --progress=plain --ssh default -t r6by/docker-experimental-ssh-circleci:$TAG -t r6by/docker-experimental-ssh-circleci:latest .
       - run:
           name: Docker login
           command: echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
