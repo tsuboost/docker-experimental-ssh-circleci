@@ -1,53 +1,13 @@
-version: 2
-jobs:
-  build-push:
-    docker:
-      - image: alpine:3.11
-    environment:
-      BASH_ENV: /etc/profile
-      DOCKER_BUILDKIT: 1
-      PRIVATE_KEY: id_rsa_68bbc2800cd56663bde58ac4cb2087fd
-    shell: /bin/sh -leo pipefail
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - 68:bb:c2:80:0c:d5:66:63:bd:e5:8a:c4:cb:20:87:fd
-      - setup_remote_docker:
-          # docker_layer_caching: true
-          version: 18.09.3
-      - run:
-          name: Install Docker client
-          command: apk add --no-cache --no-progress docker-cli
-      - run:
-          name: Define image tag
-          command: |
-            echo 'export TAG=0.1.$CIRCLE_BUILD_NUM' >> $BASH_ENV
-      - run:
-          name: Build Docker image
-          command: |
-            docker build --progress=plain --ssh default=/root/.ssh/$PRIVATE_KEY -t r6by/docker-experimental-ssh-circleci:$TAG -t r6by/docker-experimental-ssh-circleci:latest .
-          # Alternative approach. Useful with multiple ssh keys
-          # See https://circleci.com/docs/2.0/add-ssh-key/#adding-multiple-keys-with-blank-hostnames
-          # command: |
-          #   apk add --no-cache --no-progress openssh-client
-          #   ssh-add -D
-          #   ssh-add /root/.ssh/$PRIVATE_KEY
-          #   docker build --progress=plain --ssh default -t r6by/docker-experimental-ssh-circleci:$TAG -t r6by/docker-experimental-ssh-circleci:latest .
-      - run:
-          name: Docker login
-          command: echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-      - run:
-          name: Push Docker image
-          command: |
-            docker push r6by/docker-experimental-ssh-circleci:$TAG
-            docker push r6by/docker-experimental-ssh-circleci:latest
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+# Use a package of configuration called an orb.
+orbs:
+  # Declare a dependency on the welcome-orb
+  welcome: circleci/welcome-orb@0.4.1
+# Orchestrate or schedule a set of jobs
 workflows:
-  version: 2
-  build-push:
+  # Name the workflow "welcome"
+  welcome:
+    # Run the welcome/run job in its own container
     jobs:
-      - build-push:
-          filters:
-            branches:
-              only:
-                - master
+      - welcome/run
